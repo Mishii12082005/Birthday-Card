@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Birthday Surprise for Rinky</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+            background-size: 400% 400%;
+            animation: bg 10s infinite alternate;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        @keyframes bg {
+            0% {
+                background-position: left
+            }
+            100% {
+                background-position: right
+            }
+        }
+        
+        #gift {
+            font-size: 120px;
+            cursor: pointer;
+            margin-top: 120px;
+            animation: float 2s infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0)
+            }
+            50% {
+                transform: translateY(-15px)
+            }
+            100% {
+                transform: translateY(0)
+            }
+        }
+        
+        .shake {
+            animation: shake 0.6s;
+        }
+        
+        @keyframes shake {
+            0% {
+                transform: rotate(0)
+            }
+            25% {
+                transform: rotate(10deg)
+            }
+            50% {
+                transform: rotate(-10deg)
+            }
+            75% {
+                transform: rotate(10deg)
+            }
+            100% {
+                transform: rotate(0)
+            }
+        }
+        
+        #message {
+            display: none;
+            color: white;
+            font-size: 28px;
+            margin-top: 50px;
+            animation: fade 2s;
+        }
+        
+        @keyframes fade {
+            from {
+                opacity: 0;
+                transform: scale(0.7)
+            }
+            to {
+                opacity: 1;
+                transform: scale(1)
+            }
+        }
+        
+        button {
+            padding: 15px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            background: #ff4da6;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        #secret {
+            display: none;
+            font-size: 22px;
+            color: #fff;
+            margin-top: 20px;
+        }
+        
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            font-size: 40px;
+            animation: rise 8s linear infinite;
+        }
+        
+        @keyframes rise {
+            from {
+                transform: translateY(0)
+            }
+            to {
+                transform: translateY(-120vh)
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 style="color:white">Tap the gift to open your birthday surprise 🎉</h1>
+
+    <div id="gift">🎁</div>
+
+    <div id="message">
+        <h2>🎂 Happy Birthday Rinky</h2>
+
+        <p>You unlocked the secret gift:</p>
+
+        <h1 style="color:yellow">Friendship Level: ∞</h1>
+
+        <p>Thanks for being the most amazing friend 💖</p>
+
+        <button onclick="reveal()">Tap to Reveal Secret Message</button>
+
+        <div id="secret">
+            <p>⚠️ System Message</p>
+            <p>This friend is too valuable to lose.</p>
+            <p>Lifetime friendship activated ❤️</p>
+        </div>
+
+    </div>
+
+    <audio id="pop" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b3a4d.mp3?filename=pop-94319.mp3"></audio>
+
+    <audio id="music" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3d63c8799a.mp3?filename=happy-birthday-to-you-piano-version-13976.mp3" type="audio/mpeg">
+</audio>
+
+    <script>
+        const gift = document.getElementById("gift")
+
+        gift.onclick = function() {
+
+            gift.classList.add("shake")
+
+            document.getElementById("pop").play()
+
+            setTimeout(() => {
+
+                gift.innerHTML = "🎉"
+
+                document.getElementById("message").style.display = "block"
+
+                const music = document.getElementById("music")
+                music.volume = 0.6
+                music.play()
+
+                startConfetti()
+                createBalloons()
+
+            }, 700)
+
+        }
+
+        function reveal() {
+            document.getElementById("secret").style.display = "block"
+        }
+
+        function createBalloons() {
+            for (let i = 0; i < 20; i++) {
+                let b = document.createElement("div")
+                b.className = "balloon"
+                b.innerHTML = "🎈"
+                b.style.left = Math.random() * 100 + "vw"
+                b.style.animationDuration = (5 + Math.random() * 5) + "s"
+                document.body.appendChild(b)
+            }
+        }
+
+        function startConfetti() {
+            for (let i = 0; i < 150; i++) {
+                let conf = document.createElement("div")
+                conf.style.position = "absolute"
+                conf.style.width = "8px"
+                conf.style.height = "8px"
+                conf.style.background = "hsl(" + Math.random() * 360 + ",100%,50%)"
+                conf.style.top = "-10px"
+                conf.style.left = Math.random() * 100 + "vw"
+                conf.style.opacity = "0.8"
+                conf.style.transform = "rotate(" + Math.random() * 360 + "deg)"
+                conf.style.animation = "fall " + (3 + Math.random() * 3) + "s linear"
+                document.body.appendChild(conf)
+            }
+        }
+    </script>
+
+    <style>
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+
+</body>
+
+</html>
+```
