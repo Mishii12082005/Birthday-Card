@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Birthday Surprise for Rinky</title>
 
     <style>
@@ -12,8 +13,12 @@
             background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
             background-size: 400% 400%;
             animation: bg 10s infinite alternate;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             overflow: hidden;
+            text-align: center;
         }
         
         @keyframes bg {
@@ -25,10 +30,15 @@
             }
         }
         
+        .container {
+            max-width: 600px;
+            padding: 20px;
+        }
+        
         #gift {
             font-size: 120px;
             cursor: pointer;
-            margin-top: 120px;
+            margin-top: 20px;
             animation: float 2s infinite;
         }
         
@@ -69,9 +79,10 @@
         #message {
             display: none;
             color: white;
-            font-size: 28px;
-            margin-top: 50px;
+            font-size: 22px;
+            margin-top: 30px;
             animation: fade 2s;
+            padding: 10px;
         }
         
         @keyframes fade {
@@ -86,20 +97,20 @@
         }
         
         button {
-            padding: 15px 25px;
-            font-size: 18px;
+            padding: 12px 18px;
+            font-size: 16px;
             border: none;
             border-radius: 10px;
             background: #ff4da6;
             color: white;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 15px;
         }
         
         #secret {
             display: none;
-            font-size: 22px;
-            color: #fff;
+            font-size: 20px;
+            color: white;
             margin-top: 20px;
         }
         
@@ -118,30 +129,37 @@
                 transform: translateY(-120vh)
             }
         }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <div class="container">
 
-    <h1 style="color:white">Tap the gift to open your birthday surprise 🎉</h1>
+        <h1 style="color:white">Tap the gift to open your birthday surprise 🎉</h1>
 
-    <div id="gift">🎁</div>
+        <div id="gift">🎁</div>
 
-    <div id="message">
-        <h2>🎂 Happy Birthday Rinky</h2>
+        <div id="message">
+            <h2>🎂 Happy Birthday Rinky</h2>
+            <p>You unlocked the secret gift:</p>
+            <h1 style="color:yellow">Friendship Level: ∞</h1>
+            <p>Thanks for being the most amazing friend 💖</p>
 
-        <p>You unlocked the secret gift:</p>
+            <button onclick="reveal()">Tap to Reveal Secret Message</button>
 
-        <h1 style="color:yellow">Friendship Level: ∞</h1>
+            <div id="secret">
+                <p>⚠️ System Message</p>
+                <p>This friend is too valuable to lose.</p>
+                <p>Lifetime friendship activated ❤️</p>
+            </div>
 
-        <p>Thanks for being the most amazing friend 💖</p>
-
-        <button onclick="reveal()">Tap to Reveal Secret Message</button>
-
-        <div id="secret">
-            <p>⚠️ System Message</p>
-            <p>This friend is too valuable to lose.</p>
-            <p>Lifetime friendship activated ❤️</p>
         </div>
 
     </div>
@@ -153,73 +171,57 @@
 </audio>
 
     <script>
-        const gift = document.getElementById("gift")
+        const gift = document.getElementById("gift");
 
         gift.onclick = function() {
-
-            gift.classList.add("shake")
-
-            document.getElementById("pop").play()
+            gift.classList.add("shake");
+            document.getElementById("pop").play();
 
             setTimeout(() => {
+                gift.innerHTML = "🎉";
+                document.getElementById("message").style.display = "block";
 
-                gift.innerHTML = "🎉"
+                const music = document.getElementById("music");
+                music.volume = 0.6;
+                music.play();
 
-                document.getElementById("message").style.display = "block"
-
-                const music = document.getElementById("music")
-                music.volume = 0.6
-                music.play()
-
-                startConfetti()
-                createBalloons()
-
-            }, 700)
-
+                startConfetti();
+                createBalloons();
+            }, 700);
         }
 
         function reveal() {
-            document.getElementById("secret").style.display = "block"
+            document.getElementById("secret").style.display = "block";
         }
 
         function createBalloons() {
             for (let i = 0; i < 20; i++) {
-                let b = document.createElement("div")
-                b.className = "balloon"
-                b.innerHTML = "🎈"
-                b.style.left = Math.random() * 100 + "vw"
-                b.style.animationDuration = (5 + Math.random() * 5) + "s"
-                document.body.appendChild(b)
+                let b = document.createElement("div");
+                b.className = "balloon";
+                b.innerHTML = "🎈";
+                b.style.left = Math.random() * 100 + "vw";
+                b.style.animationDuration = (5 + Math.random() * 5) + "s";
+                document.body.appendChild(b);
             }
         }
 
         function startConfetti() {
             for (let i = 0; i < 150; i++) {
-                let conf = document.createElement("div")
-                conf.style.position = "absolute"
-                conf.style.width = "8px"
-                conf.style.height = "8px"
-                conf.style.background = "hsl(" + Math.random() * 360 + ",100%,50%)"
-                conf.style.top = "-10px"
-                conf.style.left = Math.random() * 100 + "vw"
-                conf.style.opacity = "0.8"
-                conf.style.transform = "rotate(" + Math.random() * 360 + "deg)"
-                conf.style.animation = "fall " + (3 + Math.random() * 3) + "s linear"
-                document.body.appendChild(conf)
+                let conf = document.createElement("div");
+                conf.style.position = "absolute";
+                conf.style.width = "8px";
+                conf.style.height = "8px";
+                conf.style.background = "hsl(" + Math.random() * 360 + ",100%,50%)";
+                conf.style.top = "-10px";
+                conf.style.left = Math.random() * 100 + "vw";
+                conf.style.opacity = "0.8";
+                conf.style.transform = "rotate(" + Math.random() * 360 + "deg)";
+                conf.style.animation = "fall " + (3 + Math.random() * 3) + "s linear";
+                document.body.appendChild(conf);
             }
         }
     </script>
 
-    <style>
-        @keyframes fall {
-            to {
-                transform: translateY(110vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-    </style>
-
 </body>
 
 </html>
-```
